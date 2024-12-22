@@ -1,43 +1,44 @@
-// Smooth scroll effect for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Responsive menu toggle
+// Select DOM elements
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
+const scrollToTopBtn = document.querySelector('.scroll-to-top'); // Make sure you have this element in your HTML
 
+// Toggle mobile menu
 menuToggle.addEventListener('click', () => {
     navLinks.classList.toggle('open');
+    // Optional: Toggle aria-expanded attribute for accessibility
+    menuToggle.setAttribute(
+        'aria-expanded',
+        menuToggle.getAttribute('aria-expanded') === 'false' ? 'true' : 'false'
+    );
 });
 
-
-// Smooth Scrolling
+// Smooth scroll for all anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         e.preventDefault();
+        const targetElement = document.querySelector(this.getAttribute('href'));
+        
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+            
+            // Close mobile menu when a link is clicked
+            if (navLinks.classList.contains('open')) {
+                navLinks.classList.remove('open');
+                menuToggle.setAttribute('aria-expanded', 'false');
+            }
+        }
+    });
+});
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
+// Scroll to top functionality
+if (scrollToTopBtn) {
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
             behavior: 'smooth'
         });
     });
-});
-
-
-
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Close mobile menu when a nav link is clicked
-navLinks.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-    });
-});
+}
