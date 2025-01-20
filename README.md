@@ -18,4 +18,4 @@ We partner with trusted suppliers to deliver only the best-quality materials.
 
 **Fast and Reliable Delivery:**
 Get your materials delivered on time, every time.
-Delivery within time
+Delivery within time ..
